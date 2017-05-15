@@ -8,8 +8,8 @@ from aiohttp import web
 from mitmproxy import proxy, options
 from mitmproxy.proxy.server import ProxyServer
 
-from proxy import ProxyMaster
-from storage import get_storage
+from papimem.proxy import ProxyMaster
+from papimem.storage import get_storage
 
 
 class PapimemApp:

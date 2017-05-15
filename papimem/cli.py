@@ -1,8 +1,8 @@
 import os
 import click
 
-from app import PapimemApp
-from storage.redis import DEFAULT_DSN
+from papimem.app import PapimemApp
+from papimem.storage.redis import DEFAULT_DSN
 
 
 @click.command()

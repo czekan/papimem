@@ -1,7 +1,6 @@
 import os
 import logging
 
-import mitmproxy
 from mitmproxy import controller, master, options, http
 from mitmproxy.proxy.server import ProxyServer
 
