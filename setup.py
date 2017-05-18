@@ -3,13 +3,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="papimem",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages(),
     install_requires=[
         'click',
-        'aiohttp',
-        'cchardet',
-        'aiodns',
+        'flask',
         'redis',
         'dsnparse',
         'mitmproxy',
@@ -34,4 +32,6 @@ setup(
         "memorize requests", "api cache", "proxy", "analyze request-response"
     ],
     url="https://github.com/czekan/papimem",
+    zip_safe=False,
+    package_data={'papimem': ['web/templates/*.html']},
 )

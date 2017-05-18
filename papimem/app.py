@@ -1,15 +1,16 @@
-import asyncio
 import logging
 import sys
 import multiprocessing
 
-import aiohttp
-from aiohttp import web
 from mitmproxy import proxy, options
 from mitmproxy.proxy.server import ProxyServer
 
 from papimem.proxy import ProxyMaster
 from papimem.storage import get_storage
+from papimem.web import webapp
+
+
+WEB_SERVER_NAME = 'localhost:8090'
 
 
 class PapimemApp:
@@ -25,9 +26,17 @@ class PapimemApp:
         logging.root.addHandler(logging.StreamHandler(sys.stdout))
 
     def run(self):
+        """ Start proxy server and web explorer app. """
         # start separete process with proxy
         proxy_proc = multiprocessing.Process(target=self.run_proxy)
         proxy_proc.start()
+
+        # start web explorer in main process
+        webapp.config.update(dict(
+            STORAGE_DSN=self.storage_dsn,
+            SERVER_NAME=WEB_SERVER_NAME,
+        ))
+        webapp.run()
 
     def run_proxy(self):
         """ Run proxy server """

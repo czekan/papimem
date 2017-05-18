@@ -53,8 +53,8 @@ or pass options in command line arguments
 Arguments:
  - --proxy_port  Proxy server http and https port to run on. default: 8080
  - --storage_dsn Persistent storage DSN for requests and responses. default: redis://localhost:6379/0
- - --mock_mode/--no-mock_mode  Run on mock mode - request are served from storage
-                             or no mock mode - pass them to remote host and store.
+ - --mock_mode/--no-mock_mode  Run on `mock mode` - request are served from storage
+                             or `no mock mode` - pass them to remote host and store.
                              default: --no-mock_mode
 
 Run help:
@@ -76,3 +76,7 @@ to your system CA bundle or at least for `requests` library you can set it as an
 # run your app
 (env)$ python -c "import requests; print(requests.get('https://jsonplaceholder.typicode.com/comments', params={'postId': 1})).text" 
 ```
+
+By default Papimem runs a web app on `http://localhost:8090` where you can see all stored requests and responses.
+
+If you want to use stored requests as a offline cache or mock simply run papimem with `--mock_mode` param.

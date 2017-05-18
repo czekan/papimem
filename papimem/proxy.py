@@ -4,13 +4,14 @@ import logging
 from mitmproxy import controller, master, options, http
 from mitmproxy.proxy.server import ProxyServer
 
+from papimem.storage.base import ReqRes
+
 
 class ProxyMaster(master.Master):
     """ Main proxy class """
 
     def __init__(self, opts, server, storage, mock_mode=False):
         master.Master.__init__(self, opts, server)
-        self.stickyhosts = {}
         self.storage = storage
         self.mock_mode = mock_mode
 
@@ -30,13 +31,13 @@ class ProxyMaster(master.Master):
             return flow.reply
 
         # if mock_mode is enabled then return previously saved response
-        response = self.storage.get(key)
-        if response:
+        reqres = self.storage.get(key)
+        if reqres:
             logging.info("Serving stored response for: %s", key)
             flow.response = http.HTTPResponse.make(
-                response.status_code,
-                response.content,
-                dict(response.headers)
+                reqres.response.status_code,
+                reqres.response.content,
+                dict(reqres.response.headers)
             )
             return
 
@@ -51,5 +52,5 @@ class ProxyMaster(master.Master):
 
         # save response object
         key = self.storage.generate_key(flow.request)
-        self.storage.save(key, flow.response)
+        self.storage.save(key, ReqRes(flow.request, flow.response))
         return flow.reply

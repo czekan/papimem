@@ -29,10 +29,10 @@ class RedisStorage(StorageBase):
             logging.error('Unpickling Fails. No response found in storage.')
             return None
 
-    def save(self, key, response):
-        obj = pickle.dumps(response)
+    def save(self, key, reqres):
+        obj = pickle.dumps(reqres)
         return self.redis.set(key, obj)
 
-    def get_all(self, key):
+    def get_all(self):
         for key in self.redis.scan_iter("*"):
             yield pickle.loads(self.redis.get(key))

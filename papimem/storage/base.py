@@ -1,6 +1,13 @@
 from abc import ABCMeta, abstractmethod
 
 
+class ReqRes:
+    """ Request-Response object """
+    def __init__(self, request, response):
+        self.request = request
+        self.response = response
+
+
 class StorageBase:
     """ Storage Abstract Base Class """
     __metaclass__ = ABCMeta
@@ -20,15 +27,15 @@ class StorageBase:
 
     @abstractmethod
     def get(self, key):
-        """ Get response by key """
+        """ Get ReqRes (request-response) object by key """
         pass
 
     @abstractmethod
-    def save(self, key, response):
-        """ Save response in storage """
+    def save(self, key, reqres):
+        """ Save ReqRes  (request-response) object in storage """
         pass
 
     @abstractmethod
-    def get_all(self, key):
-        """ Get all stored responses """
+    def get_all(self):
+        """ Get all stored ReqRes (request-response) objects """
         pass
